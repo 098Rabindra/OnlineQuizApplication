@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* ================= RESET ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* ================= BODY ================= */
+
+body{
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a,
+        #2563eb,
+        #facc15
+    );
+
+    background-size:400% 400%;
+
+    animation:bgMove 12s ease infinite;
+}
+
+/* ANIMATION */
+
+@keyframes bgMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+}
+
+/* GLOW EFFECT */
+
+body::before{
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    background:#facc15;
+
+    border-radius:50%;
+
+    top:-150px;
+    left:-150px;
+
+    filter:blur(140px);
+
+    opacity:0.5;
+}
+
+body::after{
+    content:"";
+
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    background:#2563eb;
+
+    border-radius:50%;
+
+    bottom:-120px;
+    right:-120px;
+
+    filter:blur(140px);
+
+    opacity:0.5;
+}
+
+/* ================= BACK BUTTON ================= */
+
+.back-btn{
+
+    position:fixed;
+
+    top:20px;
+    right:20px;
+
+    padding:10px 18px;
+
+    border:none;
+    border-radius:12px;
+
+    background:rgba(255,255,255,0.15);
+
+    color:white;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
+
+    font-weight:bold;
+
+    transition:0.3s;
+
+    z-index:10;
+}
+
+.back-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,0.25);
+}
+
+/* ================= LOGIN CARD ================= */
+
+.container{
+
+    width:390px;
+
+    padding:40px;
+
+    border-radius:28px;
+
+    background:rgba(255,255,255,0.12);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,0.2);
+
+    box-shadow:
+        0 8px 40px rgba(0,0,0,0.35),
+        inset 0 1px 1px rgba(255,255,255,0.15);
+
+    text-align:center;
+
+    color:white;
+
+    position:relative;
+
+    z-index:2;
+}
+
+/* ================= LOGO ================= */
+
+.logo{
+
+    width:85px;
+    height:85px;
+
+    margin:auto;
+    margin-bottom:18px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        #facc15,
+        #f59e0b
+    );
+
+    color:#0f172a;
+
+    font-size:34px;
+
+    box-shadow:
+        0 8px 25px rgba(250,204,21,0.45);
+}
+
+/* ================= TITLE ================= */
+
+h2{
+
+    font-size:32px;
+
+    margin-bottom:8px;
+
+    font-weight:700;
+}
+
+/* ================= TAGLINE ================= */
+
+.tagline{
+
+    font-size:14px;
+
+    color:#e5e7eb;
+
+    margin-bottom:28px;
+
+    line-height:1.5;
+}
+
+/* ================= INPUTS ================= */
+
+.input-group{
+    margin-bottom:18px;
+    text-align:left;
+}
+
+.input-box{
+
+    position:relative;
+}
+
+.input-box i{
+
+    position:absolute;
+
+    left:15px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#facc15;
+}
+
+input{
+
+    width:100%;
+
+    padding:14px 14px 14px 45px;
+
+    border:none;
+    outline:none;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.14);
+
+    color:white;
+
+    font-size:15px;
+
+    transition:0.3s;
+}
+
+input::placeholder{
+    color:#d1d5db;
+}
+
+input:focus{
+
+    background:rgba(255,255,255,0.22);
+
+    transform:scale(1.02);
+
+    box-shadow:
+        0 0 12px rgba(250,204,21,0.4);
+}
+
+/* ================= ERRORS ================= */
+
+.error-text{
+
+    color:#fde047;
+
+    font-size:13px;
+
+    margin-top:5px;
+
+    padding-left:5px;
+}
+
+/* ================= BUTTON ================= */
+
+.login-btn{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #facc15,
+        #f59e0b
+    );
+
+    color:#111827;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.35s;
+
+    margin-top:10px;
+
+    box-shadow:
+        0 8px 20px rgba(250,204,21,0.35);
+}
+
+.login-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(250,204,21,0.5);
+}
+
+/* ================= LINK ================= */
+
+a{
+
+    display:block;
+
+    margin-top:22px;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-size:14px;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:480px){
+
+    .container{
+
+        width:92%;
+
+        padding:30px;
+    }
+
+    h2{
+        font-size:28px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN CARD -->
+
+<div class="container">
+
+    <!-- LOGO -->
+
+    <div class="logo">
+        <i class="fa-solid fa-trophy"></i>
+    </div>
+
+    <!-- TITLE -->
+
+    <h2>Welcome Back</h2>
+
+    <!-- TAGLINE -->
+
+    <p class="tagline">
+        Welcome to our Quiz Application
+        challenge your knowledge, improve your skills,
+        and compete with top players.
+    </p>
+
+    <!-- FORM -->
+
+    <form action="./LoginServlet" method="post">
+
+        <div class="input-group">
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-user"></i>
+
+                <input
+                    id="username"
+                    name="username"
+                    placeholder="Username"
+                    required>
+
+            </div>
+
+            <div id="userError" class="error-text"></div>
+
+        </div>
+
+        <div class="input-group">
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    required>
+
+            </div>
+
+            <div id="passError" class="error-text"></div>
+
+        </div>
+
+        <button class="login-btn">
+            Login
+        </button>
+
+    </form>
+
+    <a href="register.html">
+        Create New Account
+    </a>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+function goBack(){
+
+    window.location.href="Main_page.html";
+}
+
+window.onload=function(){
+
+    const params=
+        new URLSearchParams(window.location.search);
+
+    let userError=
+        document.getElementById("userError");
+
+    let passError=
+        document.getElementById("passError");
+
+    userError.innerHTML="";
+    passError.innerHTML="";
+
+    if(params.get("error")==="user"){
+
+        userError.innerHTML=
+            "Username not found";
+    }
+
+    if(params.get("error")==="pass"){
+
+        passError.innerHTML=
+            "Incorrect password";
+    }
+
+    if(params.get("error")==="server"){
+
+        Swal.fire({
+            icon:"error",
+            title:"Server Error",
+            text:"Please try again later"
+        });
+    }
+
+    if(params.get("registered")==="1"){
+
+        Swal.fire({
+            icon:"success",
+            title:"Registration Successful",
+            text:"You can now login!",
+            confirmButtonColor:"#2563eb"
+        }).then(()=>{
+
+            window.history.replaceState(
+                {},
+                document.title,
+                "login.html"
+            );
+        });
+    }
+};
+
+</script>
+
+</body>
+</html>
